@@ -4,7 +4,7 @@
    Design: Sharp · Structural · Engineered · Light mode
 ───────────────────────────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Instrument+Serif:ital@0;1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Instrument+Serif:ital@0;1&display=swap");
 
 /* ── Tailwind v4 single import (replaces @tailwind base/components/utilities) */
 @import "tailwindcss";
@@ -27,37 +27,37 @@
   --font-display: "Plus Jakarta Sans", sans-serif;
 
   /* ── Brand ──────────────────────────────────────────────── */
-  --color-brand: #00A2FF;
-  --color-brand-dark: #007ACC;
-  --color-brand-darker: #005C99;
-  --color-eza: #00C9A7;
-  --color-zuri: #8B5CF6;
+  --color-brand: #00a2ff;
+  --color-brand-dark: #007acc;
+  --color-brand-darker: #005c99;
+  --color-eza: #00c9a7;
+  --color-zuri: #8b5cf6;
 
   /* ── Ink (text scale) ───────────────────────────────────── */
-  --color-ink-900: #0B1016;
-  --color-ink-700: #1E2A36;
-  --color-ink-500: #3D4E5C;
-  --color-ink-300: #7B8FA0;
-  --color-ink-100: #BDC8D2;
+  --color-ink-900: #0b1016;
+  --color-ink-700: #1e2a36;
+  --color-ink-500: #3d4e5c;
+  --color-ink-300: #7b8fa0;
+  --color-ink-100: #bdc8d2;
 
   /* ── Wire (borders + surfaces) ─────────────────────────── */
-  --color-wire-300: #D4DBE2;
-  --color-wire-200: #E6EAEE;
-  --color-wire-100: #F2F5F7;
-  --color-wire-50: #F9FAFB;
+  --color-wire-300: #d4dbe2;
+  --color-wire-200: #e6eaee;
+  --color-wire-100: #f2f5f7;
+  --color-wire-50: #f9fafb;
 
   /* ── Navy (dark surfaces / footer) ─────────────────────── */
-  --color-navy-950: #060B14;
-  --color-navy-900: #0A0F1E;
-  --color-navy-800: #0F1828;
+  --color-navy-950: #060b14;
+  --color-navy-900: #0a0f1e;
+  --color-navy-800: #0f1828;
   --color-navy-700: #172035;
-  --color-navy-600: #1E2D45;
+  --color-navy-600: #1e2d45;
 
   /* ── Sharp shadows - offset, structural ─────────────────── */
-  --shadow-edge-sm: 3px 3px 0px 0px #00A2FF;
-  --shadow-edge-md: 4px 4px 0px 0px #00A2FF;
-  --shadow-edge-dark: 4px 4px 0px 0px #0B1016;
-  --shadow-lift: 0 4px 16px rgba(11, 16, 22, 0.10);
+  --shadow-edge-sm: 3px 3px 0px 0px #00a2ff;
+  --shadow-edge-md: 4px 4px 0px 0px #00a2ff;
+  --shadow-edge-dark: 4px 4px 0px 0px #0b1016;
+  --shadow-lift: 0 4px 16px rgba(11, 16, 22, 0.1);
   --shadow-lift-lg: 0 12px 40px rgba(11, 16, 22, 0.14);
   --shadow-dropdown: 0 8px 32px rgba(11, 16, 22, 0.12), 0 2px 8px rgba(11, 16, 22, 0.06);
 
@@ -112,7 +112,6 @@
     transform: translateX(0);
   }
 }
-
 
 /* ─────────────────────────────────────────────────────────────
    Base styles
@@ -213,7 +212,6 @@ a {
   background: var(--color-brand);
 }
 
-
 /* ─────────────────────────────────────────────────────────────
    Reusable component classes  (used across pages + components)
 ───────────────────────────────────────────────────────────── */
@@ -263,7 +261,7 @@ a {
 }
 
 .eyebrow::before {
-  content: '';
+  content: "";
   display: block;
   width: 20px;
   height: 2px;
@@ -305,7 +303,11 @@ a {
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
-  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
   outline-offset: 3px;
 }
 
@@ -429,7 +431,9 @@ a {
   background: #fff;
   border: 1.5px solid var(--color-wire-300);
   border-radius: 2px;
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .card:hover {
@@ -454,7 +458,9 @@ a {
   font-size: 14px;
   font-weight: 500;
   padding: 11px 14px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
   outline: none;
   appearance: none;
 }
@@ -480,7 +486,7 @@ a {
 
 .error-msg {
   font-size: 12px;
-  color: #DC2626;
+  color: #dc2626;
   margin-top: 5px;
 }
 
@@ -565,7 +571,7 @@ a {
 
 .prose pre {
   background: var(--color-navy-900);
-  color: #E2E8F0;
+  color: #e2e8f0;
   border-radius: 2px;
   padding: 20px 24px;
   overflow-x: auto;
@@ -581,7 +587,7 @@ a {
   padding: 2px 7px;
   border-radius: 2px;
   font-size: 0.88em;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
   border: 1px solid var(--color-wire-300);
 }
 
@@ -686,7 +692,7 @@ a {
 
 .ProseMirror pre {
   background: var(--color-navy-900);
-  color: #E2E8F0;
+  color: #e2e8f0;
   border-radius: 2px;
   padding: 16px 20px;
   font-size: 14px;
@@ -886,7 +892,7 @@ a {
 }
 
 .delay-5 {
-  animation-delay: 0.40s;
+  animation-delay: 0.4s;
 }
 
 /* Dark hero, top of page */

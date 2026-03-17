@@ -1,4 +1,8 @@
 export function calculateReadingTime(content: string): number {
-  const words = content.replace(/<[^>]+>/g, "").trim().split(/\s+/).filter(Boolean).length;
+  const words = content
+    .replace(/<[^>]+>/g, "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
   return Math.max(1, Math.ceil(words / 220)); // 220 wpm average
 }

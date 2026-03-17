@@ -3,7 +3,9 @@ import { getCurrentUser } from "@/lib/auth";
 import { getDb, schema } from "@/db";
 import { slugify } from "@/lib/slugify";
 export async function GET() {
-  return NextResponse.json(await getDb().select().from(schema.categories).orderBy(schema.categories.name));
+  return NextResponse.json(
+    await getDb().select().from(schema.categories).orderBy(schema.categories.name),
+  );
 }
 export async function POST(req: NextRequest) {
   const user = await getCurrentUser();
