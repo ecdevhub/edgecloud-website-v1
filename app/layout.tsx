@@ -30,6 +30,9 @@ export const metadata: Metadata = {
       "Kenya's digital enablement cloud agency. DPA-compliant, M-Pesa-native, Nairobi-based.",
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 const orgLd = {
