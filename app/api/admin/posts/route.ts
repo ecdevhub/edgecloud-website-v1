@@ -11,7 +11,7 @@ function requireAuth(req: NextRequest) {
   return getCurrentUser();
 }
 
-// GET /api/admin/posts  — list all posts (draft + published)
+// GET /api/admin/posts  - list all posts (draft + published)
 export async function GET(req: NextRequest) {
   const user = await requireAuth(req);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -25,12 +25,14 @@ export async function GET(req: NextRequest) {
 
   const conditions: any[] = [];
   if (status) conditions.push(eq(posts.status, status as any));
-  if (search) conditions.push(or(like(posts.title, `%${search}%`), like(posts.excerpt, `%${search}%`)));
+  if (search)
+    conditions.push(or(like(posts.title, `%${search}%`), like(posts.excerpt, `%${search}%`)));
 
   const where = conditions.length > 0 ? and(...conditions) : undefined;
 
   const [rows, countRows] = await Promise.all([
-    db.select({ post: posts, author: authors, category: categories })
+    db
+      .select({ post: posts, author: authors, category: categories })
       .from(posts)
       .leftJoin(authors, eq(posts.authorId, authors.id))
       .leftJoin(categories, eq(posts.categoryId, categories.id))
@@ -38,7 +40,10 @@ export async function GET(req: NextRequest) {
       .orderBy(desc(posts.updatedAt))
       .limit(perPage)
       .offset((page - 1) * perPage),
-    db.select({ count: sql<number>`count(*)` }).from(posts).where(where),
+    db
+      .select({ count: sql<number>`count(*)` })
+      .from(posts)
+      .where(where),
   ]);
 
   return NextResponse.json({
@@ -49,7 +54,7 @@ export async function GET(req: NextRequest) {
   });
 }
 
-// POST /api/admin/posts — create post
+// POST /api/admin/posts - create post
 export async function POST(req: NextRequest) {
   const user = await requireAuth(req);
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -70,7 +75,8 @@ export async function POST(req: NextRequest) {
 
     const readingTime = calculateReadingTime(body.contentHtml || body.content || "");
     const now = new Date();
-    const publishedAt = body.status === "published" ? (body.publishedAt ? new Date(body.publishedAt) : now) : null;
+    const publishedAt =
+      body.status === "published" ? (body.publishedAt ? new Date(body.publishedAt) : now) : null;
 
     const [result] = await db.insert(posts).values({
       title: body.title,
@@ -97,9 +103,10 @@ export async function POST(req: NextRequest) {
 
     // Save tags
     if (body.tagIds?.length > 0) {
-      await db.insert(schema.postTags).values(
-        body.tagIds.map((tagId: number) => ({ postId, tagId }))
-      ).onDuplicateKeyUpdate({ set: { postId: sql`post_id` } });
+      await db
+        .insert(schema.postTags)
+        .values(body.tagIds.map((tagId: number) => ({ postId, tagId })))
+        .onDuplicateKeyUpdate({ set: { postId: sql`post_id` } });
     }
 
     const post = await db.select().from(posts).where(eq(posts.id, postId)).limit(1);

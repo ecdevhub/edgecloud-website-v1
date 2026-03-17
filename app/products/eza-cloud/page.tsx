@@ -1,147 +1,582 @@
 "use client";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Shield, Zap, Globe, Server } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Shield,
+  MapPin,
+  CreditCard,
+  Globe,
+  ShoppingCart,
+  Megaphone,
+  Code2,
+  Lock,
+  Zap,
+  Server,
+} from "lucide-react";
 
-const outcomes = [
-  { icon: Zap, color: "#00A389", title: "M-Pesa in Minutes", desc: "STK Push, C2B, B2C, and reconciliation APIs pre-integrated. Ship payment flows in days, not months." },
-  { icon: Shield, color: "#00A2FF", title: "DPA-Compliant by Default", desc: "Data residency, consent logs, DPIA templates, and audit trails — built into every deployment." },
-  { icon: Globe, color: "#D97706", title: "Kenyan Data Sovereignty", desc: "All data stays in Nairobi. No cross-border transfers. Certifiable under the Data Protection Act 2019." },
-  { icon: Server, color: "#7C3AED", title: "Managed Kubernetes", desc: "Production-grade orchestration without the DevOps overhead. Autoscaling, monitoring, and updates handled." },
+/* ─── Data ───────────────────────────────────────────────────── */
+const TRUST_STATS = [
+  { icon: Shield, label: "DPA-Aligned by Default" },
+  { icon: MapPin, label: "Nairobi Data Centres" },
+  { icon: CreditCard, label: "M-Pesa-Native" },
 ];
 
-const plans = [
-  { name: "Starter", price: "KES — / mo", features: ["2 vCPU / 4 GB RAM", "50 GB SSD", "M-Pesa STK Push", "DPA Audit Logs", "Nairobi Support (Email)"], cta: "Get started", highlight: false },
-  { name: "Business", price: "KES — / mo", features: ["8 vCPU / 16 GB RAM", "250 GB SSD + Backups", "Full M-Pesa Suite", "Managed Kubernetes", "WooCommerce Pre-config", "Priority Support (WhatsApp)"], cta: "Book a demo", highlight: true },
-  { name: "Enterprise", price: "Custom", features: ["Dedicated infrastructure", "Custom compliance reports", "DPO consultation", "SLA-backed uptime", "Dedicated account manager", "On-site onboarding"], cta: "Contact us", highlight: false },
+const PRODUCTS = [
+  {
+    icon: Globe,
+    name: "Eza Website",
+    tagline: "Nairobi WordPress Cloud",
+    href: "https://eza.co.ke/website",
+    accentColor: "#00C9A7",
+    description:
+      "Managed WordPress hosting for Kenyan businesses - local backups, human support, none of the server headaches.",
+    bullets: [
+      "Managed WordPress on Tier III+ Nairobi infrastructure",
+      "Daily backups with 30-day retention",
+      "DPA-aligned data residency: your data stays in Kenya",
+      "Nairobi-based support in English & Swahili",
+    ],
+  },
+  {
+    icon: ShoppingCart,
+    name: "Eza Shop",
+    tagline: "M-Pesa Ready Stores",
+    href: "https://eza.co.ke/shop",
+    accentColor: "#00A2FF",
+    description:
+      "One-click M-Pesa + WooCommerce/Shopify connector, pre-tuned for Kenyan checkout patterns.",
+    bullets: [
+      "M-Pesa Daraja API (STK Push, Lipa Na M-Pesa) out of the box",
+      "WooCommerce and Shopify connectors",
+      "Kenyan SSL & .co.ke / .ke domain management",
+      "DPA-compliant customer data handling",
+    ],
+  },
+  {
+    icon: Megaphone,
+    name: "Eza Promote",
+    tagline: "Digital Growth Tools",
+    href: "https://eza.co.ke/promote",
+    accentColor: "#F59E0B",
+    description:
+      "Landing pages, email, basic CRM, and analytics - everything a Kenyan SME needs to grow.",
+    bullets: [
+      "Drag-and-drop landing page builder",
+      "Email campaigns with DPA consent management built in",
+      "Basic CRM and audience segmentation",
+      "Privacy-first analytics (Kenya-hosted)",
+    ],
+  },
+  {
+    icon: Code2,
+    name: "Eza Apps",
+    tagline: "Managed Dev & K8s",
+    href: "https://eza.co.ke/apps",
+    accentColor: "#8B5CF6",
+    description:
+      "Managed apps, containers, and databases on Kenyan infrastructure - orchestration without the ops burden.",
+    bullets: [
+      "Managed Kubernetes with auto-scaling node pools",
+      "Built-in CI/CD (GitHub Actions, GitLab CI)",
+      "Managed databases (Postgres, MySQL, Redis)",
+      "Kenya Cloud Policy 2025 open-standards aligned",
+    ],
+  },
+  {
+    icon: Lock,
+    name: "Eza Private",
+    tagline: "DPA Cloud for Regulated Teams",
+    href: "https://eza.co.ke/private",
+    accentColor: "#DC2626",
+    description:
+      "Dedicated, single-tenant cloud for banks, SACCOs, health providers, and government contractors.",
+    bullets: [
+      "Single-tenant infrastructure, fully within Kenya",
+      "DPIA-ready documentation and DPA compliance pack",
+      "Sector templates: FinTech/SASRA, HealthTech, Education, Government",
+      "Government procurement readiness documentation",
+    ],
+  },
 ];
 
-const faqs = [
-  { q: "Is Eza Cloud certified under Kenya's DPA?", a: "Eza Cloud is architected for DPA alignment. We provide DPIA templates, data processing agreements, and audit logs. We recommend engaging a certified DPO for full legal sign-off." },
-  { q: "How long does M-Pesa integration take?", a: "For standard STK Push flows, most clients go live within 3–5 days. Complex reconciliation or B2C flows may take 1–2 weeks depending on your Safaricom API tier." },
-  { q: "Can I migrate my existing WooCommerce store?", a: "Yes. We offer managed migration with zero-downtime deployment. Our team handles DNS cutover, SSL, and M-Pesa reconfiguration." },
-  { q: "Where are your data centres?", a: "Our primary infrastructure is in Nairobi, Kenya. No customer data is transferred outside Kenya without explicit written consent and a Data Processing Agreement." },
+const PLATFORM_FEATURES = [
+  "Managed infrastructure - no DevOps team required",
+  "DPA consent logs stored immutably in-region",
+  "M-Pesa STK Push, C2B, B2C APIs pre-integrated",
+  "SSL, WAF, and DDoS protection included",
+  "KES-priced plans - no USD conversion surprises",
+  "Nairobi support in English & Swahili, WhatsApp-accessible",
 ];
 
+const ARCH_LAYERS = [
+  {
+    label: "Your Application",
+    color: "#00A2FF",
+    items: ["WordPress / WooCommerce", "Custom App", "API"],
+  },
+  {
+    label: "Eza Cloud Platform",
+    color: "#00C9A7",
+    items: ["Managed K8s", "Load Balancer", "DPA Logs"],
+  },
+  { label: "Integrations", color: "#8B5CF6", items: ["M-Pesa STK", "ZuriMail", "Analytics"] },
+  { label: "Nairobi Data Centre", color: "#F59E0B", items: ["Primary", "Backup", "CDN Edge"] },
+];
+
+const PLANS = [
+  {
+    name: "Starter",
+    price: "KES - / mo",
+    note: "Pricing launching soon",
+    features: [
+      "2 vCPU / 4 GB RAM",
+      "50 GB SSD",
+      "M-Pesa STK Push",
+      "DPA Audit Logs",
+      "Nairobi Support (Email)",
+    ],
+    cta: "Get started",
+    highlight: false,
+  },
+  {
+    name: "Business",
+    price: "KES - / mo",
+    note: "Most popular",
+    features: [
+      "8 vCPU / 16 GB RAM",
+      "250 GB SSD + Backups",
+      "Full M-Pesa Suite",
+      "Managed Kubernetes",
+      "WooCommerce Pre-config",
+      "Priority Support (WhatsApp)",
+    ],
+    cta: "Book a demo",
+    highlight: true,
+  },
+  {
+    name: "Enterprise",
+    price: "Custom",
+    note: "For regulated industries",
+    features: [
+      "Dedicated infrastructure",
+      "Custom compliance reports",
+      "DPO consultation",
+      "SLA-backed uptime",
+      "Dedicated account manager",
+      "On-site onboarding",
+    ],
+    cta: "Contact us",
+    highlight: false,
+  },
+];
+
+const FAQS = [
+  {
+    q: "Is Eza Cloud certified under Kenya's DPA?",
+    a: "Eza Cloud is architected for DPA alignment. We provide DPIA templates, data processing agreements, and audit logs. We recommend engaging a certified DPO for full legal sign-off.",
+  },
+  {
+    q: "How long does M-Pesa integration take?",
+    a: "For standard STK Push flows, most clients go live within 3–5 days. Complex reconciliation or B2C flows may take 1–2 weeks depending on your Safaricom API tier.",
+  },
+  {
+    q: "Can I migrate my existing WooCommerce store?",
+    a: "Yes. We offer managed migration with zero-downtime deployment. Our team handles DNS cutover, SSL, and M-Pesa reconfiguration.",
+  },
+  {
+    q: "Where are your data centres?",
+    a: "Our primary infrastructure is in Nairobi, Kenya. No customer data is transferred outside Kenya without explicit written consent and a Data Processing Agreement.",
+  },
+];
+
+/* ─── Page ───────────────────────────────────────────────────── */
 export default function EzaCloudPage() {
   return (
-    <>
-      {/* Hero */}
-      <section style={{ paddingTop: 104, paddingBottom: 72, background: "white", borderBottom: "1px solid #E5E8ED", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(0,163,137,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,163,137,0.04) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", top: -100, right: -100, width: 500, height: 500, background: "radial-gradient(circle, rgba(0,163,137,0.07) 0%, transparent 65%)", borderRadius: "50%", pointerEvents: "none" }} />
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 40px", position: "relative" }}>
-          <div style={{ maxWidth: 680, margin: "0 auto", textAlign: "center" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "5px 14px", borderRadius: 999, background: "rgba(0,163,137,0.08)", border: "1px solid rgba(0,163,137,0.22)", marginBottom: 24 }}>
-              <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#00A389" }} />
-              <span style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#00A389" }}>Eza Cloud — Production Ready</span>
+    <main className="bg-[#F9FAFB]">
+      {/* ══════════════════════════════════════════════════════
+          PAGE HEADER - compact, light
+      ══════════════════════════════════════════════════════ */}
+      <section className="pt-32 pb-10 md:pt-36 md:pb-12 bg-white border-b border-[#E6EAEE]">
+        <div className="max-w-[1320px] mx-auto px-5 md:px-10">
+          {/* Breadcrumb */}
+          <p className="flex items-center gap-2 font-sans text-[11px] text-[#BDC8D2] font-medium mb-5">
+            <Link href="/" className="hover:text-[#7B8FA0] transition-colors duration-150">
+              Home
+            </Link>
+            <span>/</span>
+            <Link href="/solutions" className="hover:text-[#7B8FA0] transition-colors duration-150">
+              Solutions
+            </Link>
+            <span>/</span>
+            <span className="text-[#7B8FA0]">Eza Cloud</span>
+          </p>
+
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <div className="max-w-[680px]">
+              <p className="font-sans font-black text-[9.5px] tracking-[0.16em] uppercase text-[#00C9A7] mb-3">
+                by EdgeCloud Technologies
+              </p>
+              <h1
+                className="font-serif text-[#0B1016] mb-4"
+                style={{
+                  fontSize: "clamp(32px, 4vw, 52px)",
+                  lineHeight: 1.08,
+                  letterSpacing: "-0.035em",
+                  fontWeight: 400,
+                }}
+              >
+                Eza Cloud
+              </h1>
+              <p className="font-sans text-[16px] md:text-[17px] text-[#3D4E5C] leading-relaxed max-w-[560px]">
+                Kenya's only cloud platform with DPA compliance, M-Pesa-native payments, managed
+                Kubernetes, and Tier III+ Nairobi data centres - built into one coherent stack.
+              </p>
             </div>
-            <h1 style={{ fontFamily: "'Instrument Serif',serif", fontSize: "clamp(34px,5vw,58px)", fontWeight: 400, color: "#0F1923", marginBottom: 20, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-              DPA-compliant Kenyan cloud<br />with{" "}
-              <span style={{ background: "linear-gradient(135deg,#00A389,#00A2FF)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>M-Pesa built in.</span>
-            </h1>
-            <p style={{ fontSize: 18, color: "#4A5568", lineHeight: 1.72, marginBottom: 32, maxWidth: 520, margin: "0 auto 32px" }}>
-              The only Kenyan cloud platform that ships with native M-Pesa integration, DPA compliance, and managed Kubernetes — from a team that understands EAC markets.
-            </p>
-            <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-              <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#00A389", color: "white", fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 700, fontSize: 15, padding: "13px 26px", borderRadius: 999, textDecoration: "none", boxShadow: "0 4px 20px rgba(0,163,137,0.28)" }}>
-                Book Eza Cloud Demo <ArrowRight size={16} />
+
+            <div className="flex flex-col gap-3 shrink-0">
+              <Link
+                href="/contact?product=eza-cloud&intent=demo"
+                className="inline-flex items-center gap-2 px-6 py-[13px] bg-[#00C9A7] border-[1.5px] border-[#00C9A7] font-sans font-bold text-[13px] text-white hover:bg-[#00b396] hover:-translate-y-px hover:shadow-[3px_3px_0px_0px_rgba(0,201,167,0.25)] transition-all duration-150"
+              >
+                Book an Eza Cloud Demo <ArrowRight size={13} />
               </Link>
-              <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "white", color: "#0F1923", fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 600, fontSize: 15, padding: "12px 26px", borderRadius: 999, textDecoration: "none", border: "1.5px solid #E5E8ED" }}>
-                Request Pricing
-              </Link>
+              <a
+                href="#plans"
+                className="inline-flex items-center gap-2 px-6 py-[13px] border-[1.5px] border-[#D4DBE2] font-sans font-semibold text-[13px] text-[#3D4E5C] hover:border-[#00C9A7] hover:text-[#00C9A7] transition-all duration-150"
+              >
+                View Plans & Pricing <ArrowRight size={13} />
+              </a>
             </div>
+          </div>
+
+          {/* Trust stats */}
+          <div className="flex flex-wrap gap-5 mt-8 pt-7 border-t border-[#E6EAEE]">
+            {TRUST_STATS.map(({ icon: Icon, label }) => (
+              <span
+                key={label}
+                className="flex items-center gap-2 font-sans font-bold text-[11px] tracking-[0.08em] uppercase text-[#7B8FA0]"
+              >
+                <Icon size={12} className="text-[#00C9A7]" />
+                {label}
+              </span>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Outcomes */}
-      <section style={{ padding: "72px 0", background: "#FAFBFC" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 40px" }}>
-          <h2 style={{ fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 36, color: "#0F1923", textAlign: "center", marginBottom: 48, letterSpacing: "-0.02em" }}>What you get with Eza Cloud</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
-            {outcomes.map(o => {
-              const Icon = o.icon;
-              return (
-                <div key={o.title} style={{ background: "white", border: `1px solid ${o.color}20`, borderRadius: 18, padding: "28px", boxShadow: "0 1px 6px rgba(15,25,35,0.05)" }}>
-                  <div style={{ width: 44, height: 44, background: `${o.color}12`, border: `1px solid ${o.color}25`, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
-                    <Icon size={20} style={{ color: o.color }} />
-                  </div>
-                  <h3 style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 700, fontSize: 17, color: "#0F1923", marginBottom: 9 }}>{o.title}</h3>
-                  <p style={{ fontSize: 14, color: "#4A5568", lineHeight: 1.65, margin: 0 }}>{o.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Architecture */}
-      <section style={{ padding: "72px 0", background: "white" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 40px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}>
+      {/* ══════════════════════════════════════════════════════
+          PRODUCT SUITE - 5 PRODUCTS
+      ══════════════════════════════════════════════════════ */}
+      <section className="py-20 md:py-28 bg-[#F9FAFB] border-b border-[#E6EAEE]">
+        <div className="max-w-[1320px] mx-auto px-5 md:px-10">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-12">
             <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                <div style={{ width: 18, height: 2, background: "#00A389", borderRadius: 2 }} />
-                <span style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#00A389" }}>Architecture</span>
-              </div>
-              <h2 style={{ fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 36, color: "#0F1923", marginBottom: 16, letterSpacing: "-0.02em", lineHeight: 1.15 }}>Everything wired together, out of the box.</h2>
-              <p style={{ fontSize: 16, color: "#4A5568", lineHeight: 1.75, marginBottom: 24 }}>Eza Cloud isn't a raw VPS. It's a pre-integrated platform where Kubernetes, WooCommerce, M-Pesa, and your compliance layer are connected from day one.</p>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 11 }}>
-                {["Managed Kubernetes cluster with auto-scaling", "WooCommerce pre-configured with Kenyan payment gateways", "M-Pesa STK Push + C2B + B2C APIs abstracted", "DPA consent logs stored immutably in-region", "SSL, WAF, and DDoS protection included"].map(item => (
-                  <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                    <CheckCircle2 size={15} style={{ color: "#00A389", marginTop: 2, flexShrink: 0 }} />
-                    <span style={{ fontSize: 15, color: "#4A5568" }}>{item}</span>
+              <p className="eyebrow mb-3">Five Products. One Platform.</p>
+              <h2
+                className="font-serif"
+                style={{
+                  fontSize: "clamp(24px, 3vw, 38px)",
+                  lineHeight: 1.1,
+                  letterSpacing: "-0.025em",
+                  fontWeight: 400,
+                }}
+              >
+                Choose the right Eza Cloud for your needs
+              </h2>
+            </div>
+            <Link
+              href="/solutions#eza-cloud"
+              className="inline-flex items-center gap-1.5 font-sans font-bold text-[12px] text-[#00C9A7] hover:gap-2.5 transition-all duration-150 shrink-0"
+            >
+              Full overview on Solutions page <ArrowRight size={12} />
+            </Link>
+          </div>
+
+          {/* 3-top + 2-bottom grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-[1.5px] border-[#D4DBE2]">
+            {PRODUCTS.slice(0, 3).map(
+              ({ icon: Icon, name, tagline, description, bullets, href, accentColor }, i) => (
+                <div
+                  key={name}
+                  className={[
+                    "group flex flex-col p-7 bg-white border-[#D4DBE2] hover:bg-[#F9FAFB] transition-colors duration-150",
+                    i < 2 ? "border-r-[1.5px]" : "",
+                  ].join(" ")}
+                >
+                  <div className="flex items-start justify-between mb-5">
+                    <div className="w-10 h-10 border-[1.5px] border-[#D4DBE2] flex items-center justify-center transition-colors duration-150">
+                      <Icon size={16} style={{ color: accentColor }} />
+                    </div>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-sans font-black text-[9px] tracking-[0.12em] uppercase opacity-0 group-hover:opacity-100 flex items-center gap-1 transition-opacity duration-150"
+                      style={{ color: accentColor }}
+                    >
+                      Visit <ArrowRight size={9} />
+                    </a>
+                  </div>
+                  <div
+                    className="w-0 group-hover:w-5 h-[2px] mb-3 transition-all duration-200"
+                    style={{ background: accentColor }}
+                  />
+                  <h3 className="font-sans font-bold text-[15px] text-[#0B1016] mb-0.5 leading-tight">
+                    {name}
+                  </h3>
+                  <p
+                    className="font-sans font-semibold text-[11px] tracking-[0.04em] uppercase mb-3"
+                    style={{ color: accentColor }}
+                  >
+                    {tagline}
+                  </p>
+                  <p className="font-sans text-[13px] text-[#3D4E5C] leading-relaxed mb-5 flex-1">
+                    {description}
+                  </p>
+                  <ul className="space-y-1.5 pt-4 border-t border-[#E6EAEE]">
+                    {bullets.map((b) => (
+                      <li
+                        key={b}
+                        className="flex items-start gap-2 font-sans text-[12px] text-[#7B8FA0]"
+                      >
+                        <CheckCircle2
+                          size={11}
+                          className="shrink-0 mt-0.5"
+                          style={{ color: accentColor }}
+                        />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ),
+            )}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border-x-[1.5px] border-b-[1.5px] border-[#D4DBE2]">
+            {PRODUCTS.slice(3).map(
+              ({ icon: Icon, name, tagline, description, bullets, href, accentColor }, i) => (
+                <div
+                  key={name}
+                  className={[
+                    "group flex flex-col p-7 bg-white border-[#D4DBE2] hover:bg-[#F9FAFB] transition-colors duration-150 border-t-[1.5px]",
+                    i === 0 ? "border-r-[1.5px]" : "",
+                  ].join(" ")}
+                >
+                  <div className="flex items-start justify-between mb-5">
+                    <div className="w-10 h-10 border-[1.5px] border-[#D4DBE2] flex items-center justify-center transition-colors duration-150">
+                      <Icon size={16} style={{ color: accentColor }} />
+                    </div>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-sans font-black text-[9px] tracking-[0.12em] uppercase opacity-0 group-hover:opacity-100 flex items-center gap-1 transition-opacity duration-150"
+                      style={{ color: accentColor }}
+                    >
+                      Visit <ArrowRight size={9} />
+                    </a>
+                  </div>
+                  <div
+                    className="w-0 group-hover:w-5 h-[2px] mb-3 transition-all duration-200"
+                    style={{ background: accentColor }}
+                  />
+                  <h3 className="font-sans font-bold text-[15px] text-[#0B1016] mb-0.5 leading-tight">
+                    {name}
+                  </h3>
+                  <p
+                    className="font-sans font-semibold text-[11px] tracking-[0.04em] uppercase mb-3"
+                    style={{ color: accentColor }}
+                  >
+                    {tagline}
+                  </p>
+                  <p className="font-sans text-[13px] text-[#3D4E5C] leading-relaxed mb-5 flex-1">
+                    {description}
+                  </p>
+                  <ul className="space-y-1.5 pt-4 border-t border-[#E6EAEE]">
+                    {bullets.map((b) => (
+                      <li
+                        key={b}
+                        className="flex items-start gap-2 font-sans text-[12px] text-[#7B8FA0]"
+                      >
+                        <CheckCircle2
+                          size={11}
+                          className="shrink-0 mt-0.5"
+                          style={{ color: accentColor }}
+                        />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ),
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════
+          PLATFORM FEATURES + ARCHITECTURE
+      ══════════════════════════════════════════════════════ */}
+      <section className="py-20 md:py-28 bg-white border-b border-[#E6EAEE]">
+        <div className="max-w-[1320px] mx-auto px-5 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border-[1.5px] border-[#D4DBE2]">
+            {/* Left - platform features */}
+            <div className="p-10 md:p-12 border-b lg:border-b-0 lg:border-r-[1.5px] border-[#D4DBE2]">
+              <p className="eyebrow mb-4">Platform</p>
+              <h2
+                className="font-serif mb-4"
+                style={{
+                  fontSize: "clamp(22px, 2.5vw, 34px)",
+                  lineHeight: 1.1,
+                  letterSpacing: "-0.025em",
+                  fontWeight: 400,
+                }}
+              >
+                Everything wired together,
+                <br />
+                out of the box.
+              </h2>
+              <p className="font-sans text-[14px] text-[#3D4E5C] leading-relaxed mb-8">
+                Eza Cloud isn't a raw VPS. It's a pre-integrated platform where Kubernetes,
+                WooCommerce, M-Pesa, and your compliance layer are connected from day one.
+              </p>
+              <ul className="space-y-3">
+                {PLATFORM_FEATURES.map((f) => (
+                  <li
+                    key={f}
+                    className="flex items-start gap-3 font-sans text-[13.5px] text-[#3D4E5C]"
+                  >
+                    <CheckCircle2 size={14} className="text-[#00C9A7] shrink-0 mt-0.5" />
+                    {f}
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* Layer diagram */}
-            <div style={{ background: "#FAFBFC", border: "1px solid rgba(0,163,137,0.2)", borderRadius: 20, padding: "32px" }}>
-              {[
-                { label: "Your Application", color: "#00A2FF", items: ["WooCommerce", "Custom App", "API"] },
-                { label: "Eza Cloud Platform", color: "#00A389", items: ["Managed K8s", "Load Balancer", "DPA Logs"] },
-                { label: "Integrations", color: "#7C3AED", items: ["M-Pesa STK", "SMS/Email", "Analytics"] },
-                { label: "Nairobi Data Centre", color: "#D97706", items: ["Primary", "Backup", "CDN"] },
-              ].map((layer, i, arr) => (
-                <div key={layer.label} style={{ marginBottom: i < arr.length - 1 ? 10 : 0 }}>
-                  <div style={{ fontSize: 10.5, fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: layer.color, marginBottom: 7 }}>{layer.label}</div>
-                  <div style={{ display: "flex", gap: 8 }}>
-                    {layer.items.map(c => (
-                      <div key={c} style={{ flex: 1, background: `${layer.color}10`, border: `1px solid ${layer.color}25`, borderRadius: 8, padding: "10px 6px", textAlign: "center", fontSize: 12, color: "#0F1923", fontWeight: 500 }}>{c}</div>
-                    ))}
+            {/* Right - architecture diagram */}
+            <div className="p-10 md:p-12 bg-[#F9FAFB]">
+              <p className="eyebrow mb-6">Architecture</p>
+              <div className="space-y-0 border-[1.5px] border-[#D4DBE2]">
+                {ARCH_LAYERS.map(({ label, color, items }, i) => (
+                  <div
+                    key={label}
+                    className={[
+                      "p-5 border-[#D4DBE2]",
+                      i < ARCH_LAYERS.length - 1 ? "border-b-[1.5px]" : "",
+                    ].join(" ")}
+                  >
+                    <p
+                      className="font-sans font-black text-[9.5px] tracking-[0.12em] uppercase mb-3"
+                      style={{ color }}
+                    >
+                      {label}
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {items.map((item) => (
+                        <div
+                          key={item}
+                          className="py-2.5 px-3 border-[1.5px] font-sans font-semibold text-[11.5px] text-[#0B1016] text-center"
+                          style={{ borderColor: `${color}30`, background: `${color}08` }}
+                        >
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                    {i < ARCH_LAYERS.length - 1 && (
+                      <div className="text-center mt-3 font-sans text-[#BDC8D2] text-[11px]">↓</div>
+                    )}
                   </div>
-                  {i < arr.length - 1 && <div style={{ textAlign: "center", padding: "6px 0", color: "#CDD2D9", fontSize: 18 }}>↓</div>}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Pricing */}
-      <section style={{ padding: "72px 0", background: "#FAFBFC" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 40px" }}>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
-            <h2 style={{ fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 36, color: "#0F1923", marginBottom: 10, letterSpacing: "-0.02em" }}>Simple, transparent pricing.</h2>
-            <p style={{ fontSize: 16, color: "#8B96A3" }}>All plans include DPA compliance tooling and Nairobi-based support. KES pricing launching soon.</p>
+      {/* ══════════════════════════════════════════════════════
+          PRICING
+      ══════════════════════════════════════════════════════ */}
+      <section id="plans" className="py-20 md:py-28 bg-[#F9FAFB] border-b border-[#E6EAEE]">
+        <div className="max-w-[1320px] mx-auto px-5 md:px-10">
+          <div className="max-w-[480px] mb-12">
+            <p className="eyebrow mb-3">Plans & Pricing</p>
+            <h2
+              className="font-serif mb-3"
+              style={{
+                fontSize: "clamp(24px, 3vw, 38px)",
+                lineHeight: 1.1,
+                letterSpacing: "-0.025em",
+                fontWeight: 400,
+              }}
+            >
+              Simple, transparent pricing.
+            </h2>
+            <p className="font-sans text-[13.5px] text-[#7B8FA0] leading-relaxed">
+              All plans include DPA compliance tooling and Nairobi-based support. KES pricing
+              launching soon.
+            </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
-            {plans.map(plan => (
-              <div key={plan.name} style={{ background: "white", border: `1.5px solid ${plan.highlight ? "#00A389" : "#E5E8ED"}`, borderRadius: 22, padding: "32px", position: "relative", boxShadow: plan.highlight ? "0 8px 32px rgba(0,163,137,0.12)" : "0 1px 6px rgba(15,25,35,0.05)" }}>
-                {plan.highlight && <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: "#00A389", color: "white", fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: "0.08em", padding: "4px 16px", borderRadius: 999 }}>MOST POPULAR</div>}
-                <h3 style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 800, fontSize: 21, color: "#0F1923", marginBottom: 6 }}>{plan.name}</h3>
-                <div style={{ fontFamily: "'Instrument Serif',serif", fontSize: 32, color: plan.highlight ? "#00A389" : "#0F1923", marginBottom: 24 }}>{plan.price}</div>
-                <ul style={{ listStyle: "none", margin: "0 0 28px", padding: 0, display: "flex", flexDirection: "column", gap: 10 }}>
-                  {plan.features.map(f => (
-                    <li key={f} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <CheckCircle2 size={14} style={{ color: "#00A389", flexShrink: 0 }} />
-                      <span style={{ fontSize: 14, color: "#4A5568" }}>{f}</span>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-[1.5px] border-[#D4DBE2]">
+            {PLANS.map(({ name, price, note, features, cta, highlight }, i) => (
+              <div
+                key={name}
+                className={[
+                  "flex flex-col p-8 border-[#D4DBE2]",
+                  i < 2 ? "border-r-[1.5px]" : "",
+                  highlight ? "bg-white" : "bg-white",
+                ].join(" ")}
+              >
+                {/* Plan label */}
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="font-sans font-bold text-[16px] text-[#0B1016]">{name}</h3>
+                  {highlight && (
+                    <span className="inline-flex items-center px-2.5 py-1 bg-[#00C9A7] font-sans font-black text-[9px] tracking-[0.10em] uppercase text-white">
+                      Most Popular
+                    </span>
+                  )}
+                  {!highlight && (
+                    <span className="font-sans text-[11px] text-[#BDC8D2]">{note}</span>
+                  )}
+                </div>
+
+                {/* Price */}
+                <p
+                  className="font-serif mb-6"
+                  style={{
+                    fontSize: "clamp(24px, 2.5vw, 32px)",
+                    letterSpacing: "-0.02em",
+                    color: highlight ? "#00C9A7" : "#0B1016",
+                  }}
+                >
+                  {price}
+                </p>
+
+                {/* Features */}
+                <ul className="space-y-2.5 mb-8 flex-1">
+                  {features.map((f) => (
+                    <li
+                      key={f}
+                      className="flex items-start gap-2.5 font-sans text-[13px] text-[#3D4E5C]"
+                    >
+                      <CheckCircle2 size={13} className="text-[#00C9A7] shrink-0 mt-0.5" />
+                      {f}
                     </li>
                   ))}
                 </ul>
-                <Link href="/contact" style={{ display: "block", textAlign: "center", padding: "12px 24px", borderRadius: 999, fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 700, fontSize: 14, textDecoration: "none", background: plan.highlight ? "#00A389" : "white", color: plan.highlight ? "white" : "#00A389", border: `1.5px solid ${plan.highlight ? "#00A389" : "rgba(0,163,137,0.4)"}` }}>
-                  {plan.cta}
+
+                {/* CTA */}
+                <Link
+                  href="/contact?product=eza-cloud"
+                  className={[
+                    "inline-flex items-center justify-center gap-2 px-5 py-[11px] font-sans font-bold text-[13px] border-[1.5px] transition-all duration-150",
+                    highlight
+                      ? "bg-[#00C9A7] border-[#00C9A7] text-white hover:bg-[#00b396] hover:-translate-y-px hover:shadow-[3px_3px_0px_0px_rgba(0,201,167,0.20)]"
+                      : "bg-white border-[#D4DBE2] text-[#3D4E5C] hover:border-[#00C9A7] hover:text-[#00C9A7]",
+                  ].join(" ")}
+                >
+                  {cta} <ArrowRight size={12} />
                 </Link>
               </div>
             ))}
@@ -149,20 +584,83 @@ export default function EzaCloudPage() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section style={{ padding: "72px 0", background: "white" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", padding: "0 24px" }}>
-          <h2 style={{ fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 36, color: "#0F1923", textAlign: "center", marginBottom: 48, letterSpacing: "-0.02em" }}>Frequently asked questions</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {faqs.map(faq => (
-              <div key={faq.q} style={{ background: "#FAFBFC", border: "1px solid #E5E8ED", borderRadius: 14, padding: "22px 26px" }}>
-                <h4 style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 700, fontSize: 16, color: "#0F1923", marginBottom: 9 }}>{faq.q}</h4>
-                <p style={{ fontSize: 15, color: "#4A5568", lineHeight: 1.72, margin: 0 }}>{faq.a}</p>
-              </div>
-            ))}
+      {/* ══════════════════════════════════════════════════════
+          FAQ
+      ══════════════════════════════════════════════════════ */}
+      <section className="py-20 md:py-28 bg-white border-b border-[#E6EAEE]">
+        <div className="max-w-[1320px] mx-auto px-5 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+            {/* Sticky label col */}
+            <div className="lg:col-span-4 lg:pr-12 mb-10 lg:mb-0">
+              <p className="eyebrow mb-3">FAQ</p>
+              <h2
+                className="font-serif mb-4"
+                style={{
+                  fontSize: "clamp(22px, 2.5vw, 34px)",
+                  lineHeight: 1.1,
+                  letterSpacing: "-0.025em",
+                  fontWeight: 400,
+                }}
+              >
+                Frequently asked questions
+              </h2>
+              <p className="font-sans text-[13.5px] text-[#7B8FA0] leading-relaxed mb-6">
+                Still have questions? Our Nairobi team is available on WhatsApp.
+              </p>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 font-sans font-bold text-[13px] text-[#00C9A7] hover:gap-3 transition-all duration-150"
+              >
+                Talk to us <ArrowRight size={12} />
+              </Link>
+            </div>
+
+            {/* FAQ items */}
+            <div className="lg:col-span-8 border-[1.5px] border-[#D4DBE2] divide-y divide-[#E6EAEE]">
+              {FAQS.map(({ q, a }) => (
+                <div key={q} className="p-7">
+                  <h4 className="font-sans font-bold text-[14.5px] text-[#0B1016] mb-3 leading-snug">
+                    {q}
+                  </h4>
+                  <p className="font-sans text-[13.5px] text-[#3D4E5C] leading-relaxed">{a}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
-    </>
+
+      {/* ══════════════════════════════════════════════════════
+          CTA STRIP
+      ══════════════════════════════════════════════════════ */}
+      <section className="py-16 md:py-20 bg-[#F9FAFB]">
+        <div className="max-w-[1320px] mx-auto px-5 md:px-10">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 border-[1.5px] border-[#D4DBE2] bg-white p-8 md:p-10">
+            <div>
+              <h3 className="font-sans font-bold text-[18px] text-[#0B1016] mb-1.5 leading-snug">
+                Ready to deploy on Kenya's most compliant cloud?
+              </h3>
+              <p className="font-sans text-[13px] text-[#7B8FA0]">
+                Book a 30-minute technical demo with our Nairobi engineers - no commitment required.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3 shrink-0">
+              <Link
+                href="/contact?product=eza-cloud&intent=demo"
+                className="inline-flex items-center gap-2 px-6 py-[12px] bg-[#00C9A7] border-[1.5px] border-[#00C9A7] font-sans font-bold text-[13px] text-white hover:bg-[#00b396] hover:-translate-y-px hover:shadow-[3px_3px_0px_0px_rgba(0,201,167,0.20)] transition-all duration-150"
+              >
+                Book a Free Demo <ArrowRight size={13} />
+              </Link>
+              <Link
+                href="/solutions#eza-cloud"
+                className="inline-flex items-center gap-2 px-6 py-[12px] border-[1.5px] border-[#D4DBE2] font-sans font-semibold text-[13px] text-[#3D4E5C] hover:border-[#00C9A7] hover:text-[#00C9A7] transition-all duration-150"
+              >
+                Full Solutions Overview <ArrowRight size={13} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

@@ -47,8 +47,11 @@ export async function getCurrentUser(): Promise<AdminUser | null> {
   }
 }
 
-/** Login — returns token or null */
-export async function loginUser(email: string, password: string): Promise<{ token: string; user: AdminUser } | null> {
+/** Login - returns token or null */
+export async function loginUser(
+  email: string,
+  password: string,
+): Promise<{ token: string; user: AdminUser } | null> {
   const db = getDb();
   const result = await db.select().from(authors).where(eq(authors.email, email)).limit(1);
   const author = result[0];
@@ -57,7 +60,12 @@ export async function loginUser(email: string, password: string): Promise<{ toke
   const valid = await verifyPassword(password, author.password);
   if (!valid) return null;
 
-  const user: AdminUser = { id: author.id, name: author.name, email: author.email, role: author.role };
+  const user: AdminUser = {
+    id: author.id,
+    name: author.name,
+    email: author.email,
+    role: author.role,
+  };
   const token = signToken(user);
   return { token, user };
 }

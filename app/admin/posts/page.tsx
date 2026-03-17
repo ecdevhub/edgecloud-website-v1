@@ -92,7 +92,7 @@ export default async function AdminPostsPage({ searchParams }: { searchParams: {
                       <div style={{ fontSize: 12, color: "#8B96A3" }}>by {author?.name}</div>
                     </td>
                     <td style={{ padding: "14px 16px" }}>
-                      {category ? <span style={{ fontSize: 12, fontWeight: 600, color: category.color ?? "#00A2FF", background: `${category.color ?? "#00A2FF"}15`, padding: "3px 8px", borderRadius: 999 }}>{category.name}</span> : <span style={{ color: "#CDD2D9", fontSize: 12 }}>—</span>}
+                      {category ? <span style={{ fontSize: 12, fontWeight: 600, color: category.color ?? "#00A2FF", background: `${category.color ?? "#00A2FF"}15`, padding: "3px 8px", borderRadius: 999 }}>{category.name}</span> : <span style={{ color: "#CDD2D9", fontSize: 12 }}>-</span>}
                     </td>
                     <td style={{ padding: "14px 16px" }}>
                       <span style={{ padding: "3px 10px", borderRadius: 999, fontSize: 11, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" as const, background: post.status === "published" ? "#ECFDF5" : post.status === "draft" ? "#FFFBEB" : "#F3EFFE", color: post.status === "published" ? "#059669" : post.status === "draft" ? "#D97706" : "#7C3AED" }}>{post.status}</span>

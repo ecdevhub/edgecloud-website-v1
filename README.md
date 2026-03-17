@@ -9,28 +9,33 @@ A complete Next.js 16 marketing website with a **fully functional MySQL-backed b
 ## 🚀 Quick Start
 
 ### 1. Install dependencies
+
 ```bash
 npm install
 ```
 
 ### 2. Set up environment variables
+
 ```bash
 cp .env.local.example .env.local
 # Edit .env.local with your MySQL credentials and JWT secret
 ```
 
 ### 3. Set up MySQL database
+
 ```bash
 # Create database and run schema migration
 mysql -u root -p < db/migrations/0001_init.sql
 ```
 
 ### 4. Create your admin user
+
 ```bash
 npx ts-node scripts/create-admin.ts
 ```
 
 ### 5. Start development
+
 ```bash
 npm run dev
 # → http://localhost:3000
@@ -43,19 +48,20 @@ npm run dev
 
 All tables are in `db/migrations/0001_init.sql`. Run it once to create everything.
 
-| Table | Purpose |
-|-------|---------|
-| `authors` | Admin/editor user accounts (bcrypt passwords, JWT auth) |
-| `posts` | Blog posts with full SEO fields, scheduling, status |
-| `categories` | Post categories with custom colour codes |
-| `tags` | Many-to-many post tags |
-| `post_tags` | Junction table (post ↔ tag) |
-| `post_views` | View tracking per post |
-| `comments` | Reader comments with moderation status |
-| `media` | Media library metadata |
-| `settings` | Key-value blog configuration store |
+| Table        | Purpose                                                 |
+| ------------ | ------------------------------------------------------- |
+| `authors`    | Admin/editor user accounts (bcrypt passwords, JWT auth) |
+| `posts`      | Blog posts with full SEO fields, scheduling, status     |
+| `categories` | Post categories with custom colour codes                |
+| `tags`       | Many-to-many post tags                                  |
+| `post_tags`  | Junction table (post ↔ tag)                             |
+| `post_views` | View tracking per post                                  |
+| `comments`   | Reader comments with moderation status                  |
+| `media`      | Media library metadata                                  |
+| `settings`   | Key-value blog configuration store                      |
 
 ### Entity relationships
+
 ```
 authors ──< posts >──< post_tags >──< tags
 posts   >──  categories
@@ -68,8 +74,9 @@ posts   ──<  comments
 ## 📝 Blog Features
 
 ### Public
-- **`/resources`** — Paginated blog index with category filters, tag filters, full-text search
-- **`/resources/[slug]`** — Article page with:
+
+- **`/resources`** , Paginated blog index with category filters, tag filters, full-text search
+- **`/resources/[slug]`** , Article page with:
   - Structured data (Article + BreadcrumbList JSON-LD)
   - `generateMetadata` for per-post Open Graph, Twitter cards, canonical URLs
   - `generateStaticParams` for SSG + ISR (revalidate every 5 min)
@@ -79,9 +86,10 @@ posts   ──<  comments
   - Author byline
 
 ### Admin Panel (`/admin/*`)
-- **Dashboard** — Stats overview (total posts, published, drafts, total views) + recent posts table
-- **Posts list** (`/admin/posts`) — Sortable table with status filter, search, pagination
-- **Post editor** (`/admin/posts/new` + `/admin/posts/[id]`) — Full TipTap rich-text editor with:
+
+- **Dashboard** , Stats overview (total posts, published, drafts, total views) + recent posts table
+- **Posts list** (`/admin/posts`) , Sortable table with status filter, search, pagination
+- **Post editor** (`/admin/posts/new` + `/admin/posts/[id]`) , Full TipTap rich-text editor with:
   - Toolbar: bold, italic, strike, code, H2, H3, lists, blockquote, links, images
   - Slug auto-generation from title
   - Category + tag assignment
@@ -90,9 +98,9 @@ posts   ──<  comments
   - **SEO panel**: meta title/description with character counters + live SERP preview
   - No-index toggle
   - Save draft / Publish buttons
-- **Categories** (`/admin/categories`) — Create categories with custom colour pickers
-- **Tags** (`/admin/tags`) — Create and view tags
-- **Settings** (`/admin/settings`) — Blog config + environment variable reference
+- **Categories** (`/admin/categories`) , Create categories with custom colour pickers
+- **Tags** (`/admin/tags`) , Create and view tags
+- **Settings** (`/admin/settings`) , Blog config + environment variable reference
 
 ---
 
@@ -105,6 +113,7 @@ JWT-based, stored in an `httpOnly` cookie (`ec_admin_token`).
 - Only `admin` role can delete posts
 
 **Create admin user:**
+
 ```bash
 npx ts-node scripts/create-admin.ts
 ```
@@ -115,14 +124,14 @@ npx ts-node scripts/create-admin.ts
 
 **Fonts:** `Plus Jakarta Sans` (UI / body) + `Instrument Serif` (editorial headings, hero text)
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--brand` | `#00A2FF` | EdgeCloud Blue |
-| `--eza` | `#00A389` | Eza Cloud Teal |
-| `--zuri` | `#7C3AED` | ZuriMail Purple |
-| `--bg` | `#FAFBFC` | Page background |
-| `--surface` | `#FFFFFF` | Cards / panels |
-| `--text` | `#0F1923` | Primary text |
+| Token       | Value     | Usage           |
+| ----------- | --------- | --------------- |
+| `--brand`   | `#00A2FF` | EdgeCloud Blue  |
+| `--eza`     | `#00A389` | Eza Cloud Teal  |
+| `--zuri`    | `#7C3AED` | ZuriMail Purple |
+| `--bg`      | `#FAFBFC` | Page background |
+| `--surface` | `#FFFFFF` | Cards / panels  |
+| `--text`    | `#0F1923` | Primary text    |
 
 ---
 
@@ -177,15 +186,17 @@ edgecloud/
 ## 🌐 SEO Implementation
 
 Every blog post gets:
-- `generateMetadata` — dynamic `<title>`, description, OG, Twitter card, canonical URL
-- **Article JSON-LD** — `@type: Article` with author, dates, keywords
-- **BreadcrumbList JSON-LD** — Home → Resources → Post
+
+- `generateMetadata` , dynamic `<title>`, description, OG, Twitter card, canonical URL
+- **Article JSON-LD** , `@type: Article` with author, dates, keywords
+- **BreadcrumbList JSON-LD** , Home → Resources → Post
 - ISR revalidation every 300 seconds (`export const revalidate = 300`)
-- `generateStaticParams` — pre-renders all published slugs at build time
+- `generateStaticParams` , pre-renders all published slugs at build time
 
 Global JSON-LD (in root layout):
-- `Organization` — EdgeCloud Technologies entity
-- `WebSite` + `SearchAction` — enables sitelinks search box
+
+- `Organization` , EdgeCloud Technologies entity
+- `WebSite` + `SearchAction` , enables sitelinks search box
 
 ---
 
@@ -204,12 +215,14 @@ The post immediately appears at `/resources/[your-slug]`.
 ## 🚢 Deployment
 
 ### Vercel + PlanetScale / Aiven MySQL
+
 ```bash
 npx vercel
 # Set env vars: DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME, JWT_SECRET
 ```
 
 ### Self-hosted on Eza Cloud (recommended)
+
 ```bash
 npm run build && npm start
 # Run behind Nginx/Caddy reverse proxy on port 3000
@@ -217,6 +230,7 @@ npm run build && npm start
 ```
 
 ### Generate Drizzle migrations (when schema changes)
+
 ```bash
 npx drizzle-kit generate:mysql
 npx drizzle-kit push:mysql
@@ -233,9 +247,9 @@ DB_USER=root
 DB_PASSWORD=your-secure-password
 DB_NAME=edgecloud_blog
 JWT_SECRET=your-256-bit-random-secret
-NEXT_PUBLIC_SITE_URL=https://edgecloudtech.co.ke
+NEXT_PUBLIC_SITE_URL=https://edgecloud.co.ke
 ```
 
 ---
 
-*Built with ❤️ for Kenya's digital ecosystem.*
+_Built with ❤️ for Kenya's digital ecosystem._

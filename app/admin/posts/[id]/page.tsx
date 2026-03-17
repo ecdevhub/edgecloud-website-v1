@@ -6,16 +6,19 @@ import { getCategories, getAllTags } from "@/lib/blog";
 import AdminShell from "@/components/AdminShell";
 import PostEditor from "@/components/blog/PostEditor";
 
-export default async function EditPostPage({ params }: { params: { id: string } }) {
+export default async function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser();
   if (!user) redirect("/admin/login");
 
+  const { id: rawId } = await params;
+  const id = Number(rawId);
+
   const db = getDb();
-  const id = Number(params.id);
   const [postRow] = await db.select().from(schema.posts).where(eq(schema.posts.id, id)).limit(1);
   if (!postRow) notFound();
 
-  const postTagsResult = await db.select({ tag: schema.tags })
+  const postTagsResult = await db
+    .select({ tag: schema.tags })
     .from(schema.postTags)
     .innerJoin(schema.tags, eq(schema.postTags.tagId, schema.tags.id))
     .where(eq(schema.postTags.postId, id));
@@ -42,7 +45,12 @@ export default async function EditPostPage({ params }: { params: { id: string } 
 
   return (
     <AdminShell user={user}>
-      <PostEditor postId={id} initialData={initialData} categories={categories as any} tags={allTags} />
+      <PostEditor
+        postId={id}
+        initialData={initialData}
+        categories={categories as any}
+        tags={allTags}
+      />
     </AdminShell>
   );
 }

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://edgecloudtech.co.ke/sitemap.xml
+Sitemap: https://edgecloud.co.ke/sitemap.xml
