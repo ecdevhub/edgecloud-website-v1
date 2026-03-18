@@ -11,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: [
           "/admin/", // entire admin area
-          "/api/", // all API routes — no value to index
+          "/api/", // all API routes - no value to index
           "/_next/", // Next.js internals
           "/cdn-cgi/", // Cloudflare internals if applicable
         ],
@@ -27,7 +27,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: "/",
       },
       {
-        // Block CCBot (Common Crawl — used for AI training datasets)
+        // Block CCBot (Common Crawl - used for AI training datasets)
         userAgent: "CCBot",
         disallow: "/",
       },

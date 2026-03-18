@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PageLoader from "@/components/PageLoader";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://edgecloud.co.ke"),
@@ -43,7 +44,11 @@ const orgLd = {
   url: "https://edgecloud.co.ke",
   description:
     "Kenya's digital enablement cloud agency - designing, building, hosting, and securing compliant digital products.",
-  address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Nairobi",
+    addressCountry: "KE",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -56,6 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body suppressHydrationWarning>
+        <PageLoader />
         <Navbar />
         <main>{children}</main>
         <Footer />
