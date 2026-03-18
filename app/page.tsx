@@ -21,6 +21,7 @@ import {
   Search,
   Wrench,
 } from "lucide-react";
+import NavLink from "@/components/NavLink";
 
 /* ─── Static data ─────────────────────────────────────────────── */
 const SERVICES = [
@@ -200,6 +201,17 @@ const BADGES = [
   "Tier III+ Data Centres",
   "Kenya Cloud Policy 2025",
   "M-Pesa-Native",
+];
+
+const LOGOS = [
+  "Safaricom PLC",
+  "KCB Group",
+  "Equity Bank",
+  "Twiga Foods",
+  "Cellulant",
+  "M-Kopa Solar",
+  "Copia Kenya",
+  "Sendy",
 ];
 
 /* ─── Hero background canvas ─────────────────────────────────── */
@@ -431,16 +443,11 @@ export default function HomePage() {
   return (
     <main className="hero-dark-nav">
       {/* ══════════════════════════════════════════
-          DARK ZONE - hero + badges
-      ══════════════════════════════════════════ */}
+    DARK ZONE - hero + badges
+══════════════════════════════════════════ */}
       <div className="relative overflow-hidden" style={{ background: "#060B14" }}>
-        {/* Animated topology background */}
         <HeroBackground />
-
-        {/* Top brand line */}
         <div aria-hidden className="absolute top-0 inset-x-0 h-[2px] bg-[#00A2FF]" />
-
-        {/* Left edge glow */}
         <div
           aria-hidden
           className="absolute top-0 left-0 w-[2px]"
@@ -450,140 +457,243 @@ export default function HomePage() {
           }}
         />
 
-        {/* ── HERO ── */}
-        <section className="relative pt-32 pb-20 md:pt-44 md:pb-28">
-          <div className="max-w-[1320px] mx-auto px-5 md:px-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Left - copy */}
-              <div className="relative z-10">
-                <p
-                  className="flex items-center gap-2.5 font-sans font-black text-[11px] tracking-[0.18em] uppercase mb-7"
-                  style={{ color: "#00A2FF" }}
-                >
-                  <span className="block w-5 h-[2px] shrink-0" style={{ background: "#00A2FF" }} />
-                  Kenya's Digital Enablement Cloud Agency
-                </p>
+        {/* ── HERO — full viewport height ── */}
+        <section className="relative min-h-screen flex flex-col">
+          {/* Main content — vertically centred */}
+          <div className="flex-1 flex items-center">
+            <div className="max-w-[1320px] mx-auto px-5 md:px-10 w-full py-32 md:py-0">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                {/* Left - copy */}
+                <div className="relative z-10">
+                  <p
+                    className="flex items-center gap-2.5 font-sans font-black text-[11px] tracking-[0.18em] uppercase mb-7"
+                    style={{ color: "#00A2FF" }}
+                  >
+                    <span
+                      className="block w-5 h-[2px] shrink-0"
+                      style={{ background: "#00A2FF" }}
+                    />
+                    Kenya's Digital Enablement Cloud Agency
+                  </p>
 
-                <h1
-                  className="mb-7 max-w-[580px]"
+                  <h1
+                    className="mb-7 max-w-[580px]"
+                    style={{
+                      fontFamily: "var(--font-serif, 'Instrument Serif', serif)",
+                      fontSize: "clamp(40px, 5.5vw, 68px)",
+                      lineHeight: 1.06,
+                      letterSpacing: "-0.04em",
+                      fontWeight: 400,
+                      color: "#F1F5F9",
+                    }}
+                  >
+                    One Stack.
+                    <br />
+                    <span
+                      style={{
+                        background: "linear-gradient(135deg, #00A2FF 0%, #00C9A7 100%)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                      }}
+                    >
+                      Zero Pain.
+                    </span>
+                    <br />
+                    Full Trust.
+                  </h1>
+
+                  <p
+                    className="font-sans leading-relaxed mb-10 max-w-[500px]"
+                    style={{
+                      fontSize: "clamp(15px, 1.5vw, 17px)",
+                      color: "rgba(241,245,249,0.52)",
+                    }}
+                  >
+                    We design, build, host, and secure compliant digital journeys for Kenyan and
+                    East African businesses — DPA-by-default cloud, M-Pesa-native payments, Nairobi
+                    support. All under one roof.
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-3 mb-8">
+                    <NavLink
+                      href="/contact"
+                      className="inline-flex items-center gap-2.5 font-sans font-bold text-[13.5px] text-white transition-all duration-150"
+                      style={{
+                        padding: "13px 28px",
+                        background: "#00A2FF",
+                        border: "1.5px solid #00A2FF",
+                      }}
+                    >
+                      Talk to an Expert <ArrowRight size={14} className="shrink-0" />
+                    </NavLink>
+                    <NavLink
+                      href="/products"
+                      className="inline-flex items-center gap-2.5 font-sans font-semibold text-[13.5px] transition-all duration-150"
+                      style={{
+                        padding: "13px 28px",
+                        border: "1.5px solid rgba(255,255,255,0.22)",
+                        color: "rgba(255,255,255,0.82)",
+                      }}
+                    >
+                      Explore Our Products
+                    </NavLink>
+                  </div>
+
+                  <p
+                    className="font-sans text-[11px] font-medium"
+                    style={{ color: "rgba(255,255,255,0.2)" }}
+                  >
+                    No lock-in · Kenya Cloud Policy 2025 aligned · ODPC-compliant stack
+                  </p>
+                </div>
+
+                {/* Right - topology */}
+                <div className="hidden lg:flex items-center justify-center relative z-10">
+                  <div className="w-full max-w-[480px] h-[380px]">
+                    <HeroTopology />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Scroll indicator — pinned to bottom of viewport ── */}
+          <div className="pb-10 flex flex-col items-center gap-3 relative z-10">
+            {/* Trust badges inline */}
+            <div className="flex flex-wrap justify-center gap-2 mb-4 px-5">
+              {BADGES.map((b) => (
+                <span
+                  key={b}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 font-sans font-black text-[9px] tracking-[0.12em] uppercase"
                   style={{
-                    fontFamily: "var(--font-serif, 'Instrument Serif', serif)",
-                    fontSize: "clamp(40px, 5.5vw, 68px)",
-                    lineHeight: 1.06,
-                    letterSpacing: "-0.04em",
-                    fontWeight: 400,
-                    color: "#F1F5F9",
+                    border: "1.5px solid rgba(255,255,255,0.07)",
+                    color: "rgba(255,255,255,0.3)",
                   }}
                 >
-                  One Stack.
-                  <br />
-                  <span
-                    style={{
-                      background: "linear-gradient(135deg, #00A2FF 0%, #00C9A7 100%)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                    }}
-                  >
-                    Zero Pain.
-                  </span>
-                  <br />
-                  Full Trust.
-                </h1>
+                  <Shield size={9} style={{ color: "#00A2FF" }} />
+                  {b}
+                </span>
+              ))}
+            </div>
 
-                <p
-                  className="font-sans leading-relaxed mb-10 max-w-[500px]"
-                  style={{ fontSize: "clamp(15px, 1.5vw, 17px)", color: "rgba(241,245,249,0.52)" }}
-                >
-                  We design, build, host, and secure compliant digital journeys for Kenyan and East
-                  African businesses - DPA-by-default cloud, M-Pesa-native payments, Nairobi
-                  support. All under one roof.
-                </p>
-
-                <div className="flex flex-wrap items-center gap-3 mb-8">
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center gap-2.5 font-sans font-bold text-[13.5px] text-white transition-all duration-150"
-                    style={{
-                      padding: "13px 28px",
-                      background: "#00A2FF",
-                      border: "1.5px solid #00A2FF",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = "#007ACC";
-                      (e.currentTarget as HTMLElement).style.borderColor = "#007ACC";
-                      (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)";
-                      (e.currentTarget as HTMLElement).style.boxShadow =
-                        "3px 3px 0 0 rgba(255,255,255,0.1)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = "#00A2FF";
-                      (e.currentTarget as HTMLElement).style.borderColor = "#00A2FF";
-                      (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                      (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                    }}
-                  >
-                    Talk to an Expert <ArrowRight size={14} className="shrink-0" />
-                  </Link>
-                  <Link
-                    href="/products"
-                    className="inline-flex items-center gap-2.5 font-sans font-semibold text-[13.5px] transition-all duration-150"
-                    style={{
-                      padding: "13px 28px",
-                      border: "1.5px solid rgba(255,255,255,0.22)",
-                      color: "rgba(255,255,255,0.82)",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.5)";
-                      (e.currentTarget as HTMLElement).style.color = "white";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.22)";
-                      (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.82)";
-                    }}
-                  >
-                    Explore Our Products
-                  </Link>
-                </div>
-
-                <p
-                  className="font-sans text-[11px] font-medium"
-                  style={{ color: "rgba(255,255,255,0.2)" }}
-                >
-                  No lock-in · Kenya Cloud Policy 2025 aligned · ODPC-compliant stack
-                </p>
-              </div>
-
-              {/* Right - static topology SVG (not competing with bg canvas) */}
-              <div className="hidden lg:flex items-center justify-center relative z-10">
-                <div className="w-full max-w-[480px] h-[380px]">
-                  <HeroTopology />
-                </div>
+            {/* Scroll cue */}
+            <div className="flex flex-col items-center gap-2">
+              <span
+                className="font-sans font-bold text-[9px] tracking-[0.2em] uppercase"
+                style={{ color: "rgba(255,255,255,0.2)" }}
+              >
+                Scroll
+              </span>
+              {/* Animated mouse */}
+              <div
+                style={{
+                  width: 22,
+                  height: 34,
+                  border: "1.5px solid rgba(255,255,255,0.15)",
+                  borderRadius: 11,
+                  display: "flex",
+                  justifyContent: "center",
+                  paddingTop: 5,
+                }}
+              >
+                <div
+                  style={{
+                    width: 3,
+                    height: 7,
+                    background: "#00A2FF",
+                    borderRadius: 2,
+                    animation: "scroll-dot 1.8s ease infinite",
+                  }}
+                />
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── Trust badges ── */}
-        <div style={{ borderTop: "1px solid rgba(30,45,69,0.8)" }}>
-          <div className="max-w-[1320px] mx-auto px-5 md:px-10 py-5 flex flex-wrap gap-3">
-            {BADGES.map((b) => (
-              <span
-                key={b}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 font-sans font-black text-[9px] tracking-[0.12em] uppercase"
+        {/* ── Client logo ribbon ── */}
+        <div
+          style={{
+            borderTop: "1px solid rgba(30,45,69,0.8)",
+            borderBottom: "1px solid rgba(30,45,69,0.8)",
+          }}
+        >
+          <div className="max-w-[1320px] mx-auto px-5 md:px-10 py-6">
+            <p
+              className="font-sans font-black text-[9px] tracking-[0.18em] uppercase text-center mb-5"
+              style={{ color: "rgba(255,255,255,0.2)" }}
+            >
+              Trusted by forward-thinking Kenyan businesses
+            </p>
+            {/* Scrolling ticker */}
+            <div style={{ overflow: "hidden", position: "relative" }}>
+              {/* Fade edges */}
+              <div
                 style={{
-                  border: "1.5px solid rgba(255,255,255,0.07)",
-                  color: "rgba(255,255,255,0.3)",
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: 80,
+                  background: "linear-gradient(to right, #060B14, transparent)",
+                  zIndex: 1,
+                  pointerEvents: "none",
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: 80,
+                  background: "linear-gradient(to left, #060B14, transparent)",
+                  zIndex: 1,
+                  pointerEvents: "none",
+                }}
+              />
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: 0,
+                  animation: "logo-scroll 24s linear infinite",
+                  width: "max-content",
                 }}
               >
-                <Shield size={9} style={{ color: "#00A2FF" }} />
-                {b}
-              </span>
-            ))}
+                {[...LOGOS, ...LOGOS].map((logo, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "0 40px",
+                      borderRight: "1px solid rgba(30,45,69,0.6)",
+                      minWidth: 160,
+                      height: 48,
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "monospace",
+                        fontWeight: 700,
+                        fontSize: 13,
+                        letterSpacing: "0.08em",
+                        color: "rgba(255,255,255,0.18)",
+                        whiteSpace: "nowrap",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {logo}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
       {/* ══════════════════════════════════════════
           WHY EDGECLOUD
       ══════════════════════════════════════════ */}

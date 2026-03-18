@@ -923,3 +923,35 @@ body:has(.hero-dark-nav) header.scrolled nav svg,
 body:not(:has(.hero-dark-nav)) header nav svg {
   color: #7b8fa0;
 }
+
+@keyframes scroll-dot {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  60% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+
+  61% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes logo-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}

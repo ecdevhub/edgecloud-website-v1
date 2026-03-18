@@ -1,27 +1,46 @@
 "use client";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect, useState, useCallback } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
+/* ── Global loader state accessible outside React ── */
+let showLoaderFn: (() => void) | null = null;
+
+export function triggerLoader() {
+  showLoaderFn?.();
+}
 
 export default function PageLoader() {
+  const [phase, setPhase] = useState<"hidden" | "enter" | "visible" | "exit">("hidden");
   const pathname = usePathname();
-  const [visible, setVisible] = useState(false);
-  const [fading, setFading] = useState(false);
 
+  const show = useCallback(() => {
+    setPhase("enter");
+    setTimeout(() => setPhase("visible"), 50);
+  }, []);
+
+  const hide = useCallback(() => {
+    setPhase("exit");
+    setTimeout(() => setPhase("hidden"), 400);
+  }, []);
+
+  // Register global trigger
   useEffect(() => {
-    // Show loader on route change
-    setVisible(true);
-    setFading(false);
-
-    const fadeTimer = setTimeout(() => setFading(true), 600);
-    const hideTimer = setTimeout(() => setVisible(false), 900);
-
+    showLoaderFn = show;
     return () => {
-      clearTimeout(fadeTimer);
-      clearTimeout(hideTimer);
+      showLoaderFn = null;
     };
-  }, [pathname]);
+  }, [show]);
 
-  if (!visible) return null;
+  // Hide when pathname changes (new page has rendered)
+  useEffect(() => {
+    // Small delay so loader is visible for at least 600ms
+    const t = setTimeout(hide, 600);
+    return () => clearTimeout(t);
+  }, [pathname, hide]);
+
+  if (phase === "hidden") return null;
+
+  const opacity = phase === "enter" ? 0 : phase === "visible" ? 1 : 0; // exit
 
   return (
     <div
@@ -34,71 +53,41 @@ export default function PageLoader() {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        gap: 0,
-        opacity: fading ? 0 : 1,
-        transition: "opacity 0.3s ease",
-        pointerEvents: fading ? "none" : "all",
+        opacity,
+        transition: phase === "exit" ? "opacity 0.4s ease" : "opacity 0.2s ease",
+        pointerEvents: phase === "exit" ? "none" : "all",
       }}
     >
-      {/* Topology loader SVG */}
-      <svg
-        width="120"
-        height="120"
-        viewBox="0 0 120 120"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Ping rings — staggered outward pulse */}
-        <circle cx="60" cy="60" r="20" stroke="#00A2FF" strokeWidth="1" fill="none" opacity="0">
-          <animate
-            attributeName="r"
-            values="20;48;20"
-            dur="2.4s"
-            repeatCount="indefinite"
-            begin="0s"
-          />
-          <animate
-            attributeName="opacity"
-            values="0.5;0;0.5"
-            dur="2.4s"
-            repeatCount="indefinite"
-            begin="0s"
-          />
-        </circle>
-        <circle cx="60" cy="60" r="20" stroke="#00A2FF" strokeWidth="1" fill="none" opacity="0">
-          <animate
-            attributeName="r"
-            values="20;48;20"
-            dur="2.4s"
-            repeatCount="indefinite"
-            begin="0.8s"
-          />
-          <animate
-            attributeName="opacity"
-            values="0.3;0;0.3"
-            dur="2.4s"
-            repeatCount="indefinite"
-            begin="0.8s"
-          />
-        </circle>
-        <circle cx="60" cy="60" r="20" stroke="#00C9A7" strokeWidth="1" fill="none" opacity="0">
-          <animate
-            attributeName="r"
-            values="20;48;20"
-            dur="2.4s"
-            repeatCount="indefinite"
-            begin="1.6s"
-          />
-          <animate
-            attributeName="opacity"
-            values="0.2;0;0.2"
-            dur="2.4s"
-            repeatCount="indefinite"
-            begin="1.6s"
-          />
-        </circle>
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+        {/* Ping rings */}
+        {[0, 0.8, 1.6].map((begin, i) => (
+          <circle
+            key={i}
+            cx="60"
+            cy="60"
+            r="20"
+            stroke={i === 2 ? "#00C9A7" : "#00A2FF"}
+            strokeWidth="1"
+            fill="none"
+          >
+            <animate
+              attributeName="r"
+              values="20;50;20"
+              dur="2.4s"
+              repeatCount="indefinite"
+              begin={`${begin}s`}
+            />
+            <animate
+              attributeName="opacity"
+              values={i === 0 ? "0.5;0;0.5" : i === 1 ? "0.3;0;0.3" : "0.2;0;0.2"}
+              dur="2.4s"
+              repeatCount="indefinite"
+              begin={`${begin}s`}
+            />
+          </circle>
+        ))}
 
-        {/* Satellite nodes — 4 corners */}
+        {/* Satellite nodes */}
         {[
           { cx: 24, cy: 24, color: "#00A2FF", begin: "0s" },
           { cx: 96, cy: 24, color: "#00C9A7", begin: "0.6s" },
@@ -106,7 +95,6 @@ export default function PageLoader() {
           { cx: 96, cy: 96, color: "#00A2FF", begin: "1.8s" },
         ].map(({ cx, cy, color, begin }, i) => (
           <g key={i}>
-            {/* Line to centre */}
             <line
               x1={cx}
               y1={cy}
@@ -117,7 +105,6 @@ export default function PageLoader() {
               strokeOpacity="0.25"
               strokeDasharray="3 3"
             />
-            {/* Node dot */}
             <circle
               cx={cx}
               cy={cy}
@@ -139,14 +126,14 @@ export default function PageLoader() {
           </g>
         ))}
 
-        {/* Travelling particles along spokes */}
+        {/* Travel particles */}
         {[
           { path: "M24,24 L60,60", color: "#00A2FF", dur: "1.2s", begin: "0s" },
           { path: "M96,24 L60,60", color: "#00C9A7", dur: "1.4s", begin: "0.4s" },
           { path: "M24,96 L60,60", color: "#00C9A7", dur: "1.1s", begin: "0.8s" },
           { path: "M96,96 L60,60", color: "#00A2FF", dur: "1.3s", begin: "1.2s" },
         ].map(({ path, color, dur, begin }, i) => (
-          <circle key={i} r="2" fill={color} opacity="0.9">
+          <circle key={i} r="2" fill={color}>
             <animateMotion dur={dur} repeatCount="indefinite" path={path} begin={begin} />
             <animate
               attributeName="opacity"
@@ -158,7 +145,7 @@ export default function PageLoader() {
           </circle>
         ))}
 
-        {/* Central hub — outer box */}
+        {/* Central hub */}
         <rect
           x="44"
           y="44"
@@ -168,7 +155,6 @@ export default function PageLoader() {
           stroke="#00A2FF"
           strokeWidth="1.5"
         />
-        {/* Inner box */}
         <rect
           x="48"
           y="48"
@@ -187,8 +173,6 @@ export default function PageLoader() {
         <rect x="44" y="70" width="1.5" height="6" fill="#00A2FF" />
         <rect x="70" y="74.5" width="6" height="1.5" fill="#00A2FF" />
         <rect x="74.5" y="70" width="1.5" height="6" fill="#00A2FF" />
-
-        {/* EC monogram */}
         <text
           x="60"
           y="63"
@@ -203,30 +187,15 @@ export default function PageLoader() {
           EC
         </text>
 
-        {/* Status dot — pulsing green */}
+        {/* Status dot */}
         <circle cx="76" cy="44" r="3" fill="#00C9A7">
           <animate attributeName="r" values="3;5;3" dur="1.5s" repeatCount="indefinite" />
           <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" />
         </circle>
       </svg>
 
-      {/* Loading label */}
-      <div
-        style={{
-          marginTop: 20,
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-        }}
-      >
-        <span
-          style={{
-            display: "block",
-            width: 20,
-            height: 1.5,
-            background: "#00A2FF",
-          }}
-        />
+      <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 8 }}>
+        <span style={{ display: "block", width: 20, height: 1.5, background: "#00A2FF" }} />
         <span
           style={{
             fontFamily: "monospace",
@@ -239,14 +208,7 @@ export default function PageLoader() {
         >
           EdgeCloud
         </span>
-        <span
-          style={{
-            display: "block",
-            width: 20,
-            height: 1.5,
-            background: "#00A2FF",
-          }}
-        />
+        <span style={{ display: "block", width: 20, height: 1.5, background: "#00A2FF" }} />
       </div>
 
       {/* Progress bar */}
@@ -264,17 +226,12 @@ export default function PageLoader() {
           style={{
             height: "100%",
             background: "linear-gradient(90deg, #00A2FF 0%, #00C9A7 100%)",
-            animation: "ec-progress 0.9s ease forwards",
+            animation: "ec-progress 1.2s ease forwards",
           }}
         />
       </div>
 
-      <style>{`
-        @keyframes ec-progress {
-          from { width: 0%; }
-          to   { width: 100%; }
-        }
-      `}</style>
+      <style>{`@keyframes ec-progress { from { width: 0% } to { width: 100% } }`}</style>
     </div>
   );
 }
