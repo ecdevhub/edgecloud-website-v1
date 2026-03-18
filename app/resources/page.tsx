@@ -4,11 +4,11 @@ import { ArrowRight, Clock, Search, TrendingUp, BookOpen, Tag } from "lucide-rea
 import { getPublishedPosts, getCategories, getAllTags } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Resources — Guides, Engineering & Compliance Insights | EdgeCloud Kenya",
+  title: "Resources - Guides, Engineering & Compliance Insights | EdgeCloud Kenya",
   description:
     "Engineering deep-dives, DPA compliance guides, and East African market insights written by EdgeCloud's Nairobi team.",
   openGraph: {
-    title: "EdgeCloud Resources — Practical thinking for Kenya's builders",
+    title: "EdgeCloud Resources - Practical thinking for Kenya's builders",
     description: "DPA compliance, M-Pesa engineering, Kubernetes for Kenya, and more.",
   },
 };
@@ -88,7 +88,7 @@ export default async function ResourcesPage({
         <div className="flex gap-10 items-start">
           {/* ── Main content ── */}
           <main className="flex-1 min-w-0">
-            {/* Featured post — hero card, only on unfiltered first page */}
+            {/* Featured post - hero card, only on unfiltered first page */}
             {featuredPost && page === 1 && (
               <Link
                 href={`/resources/${featuredPost.slug}`}

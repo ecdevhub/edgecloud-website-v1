@@ -28,21 +28,21 @@ const SERVICES = [
     icon: Cloud,
     title: "Cloud Services",
     teaser:
-      "Cloud migration, managed infrastructure, DevOps pipelines, security hardening, and FinOps cost optimisation — tuned for Kenya Cloud Policy 2025.",
+      "Cloud migration, managed infrastructure, DevOps pipelines, security hardening, and FinOps cost optimisation - tuned for Kenya Cloud Policy 2025.",
     href: "/services",
   },
   {
     icon: Code2,
     title: "Custom Software Development",
     teaser:
-      "Bespoke web and mobile apps, legacy modernisation, API integration, and M-Pesa-native payment flows — built by Nairobi engineers who know your context.",
+      "Bespoke web and mobile apps, legacy modernisation, API integration, and M-Pesa-native payment flows - built by Nairobi engineers who know your context.",
     href: "/services",
   },
   {
     icon: Compass,
     title: "Advisory & Training",
     teaser:
-      "Cloud strategy workshops, DPA compliance audits, and team enablement programmes — so your people grow alongside your technology.",
+      "Cloud strategy workshops, DPA compliance audits, and team enablement programmes - so your people grow alongside your technology.",
     href: "/services",
   },
 ];
@@ -52,7 +52,7 @@ const PRODUCTS = [
     label: "by EdgeCloud",
     heading: "Eza Cloud",
     oneLiner:
-      "Kenya's DPA-compliant cloud platform — managed Kubernetes, WooCommerce hosting, 1-click M-Pesa.",
+      "Kenya's DPA-compliant cloud platform - managed Kubernetes, WooCommerce hosting, 1-click M-Pesa.",
     bullets: [
       "Tier III+ Nairobi data centres for sovereignty",
       "Four pillars: Core, Kubernetes, Sovereign, Sites",
@@ -68,11 +68,11 @@ const PRODUCTS = [
     label: "by EdgeCloud",
     heading: "ZuriMail",
     oneLiner:
-      "DPA-compliant corporate email, SMS marketing, and MarTech automation — Kenya-hosted and M-Pesa-native.",
+      "DPA-compliant corporate email, SMS marketing, and MarTech automation - Kenya-hosted and M-Pesa-native.",
     bullets: [
       "KES-priced plans, hosted entirely within Kenya",
       "Consent management built into every campaign flow",
-      "Competes with Zoho & Mailchimp — built for East Africa",
+      "Competes with Zoho & Mailchimp - built for East Africa",
     ],
     href: "/products/zurimail",
     cta: "Discover ZuriMail",
@@ -86,9 +86,9 @@ const PRODUCTS = [
     oneLiner:
       "We're building the next wave of Kenya-first software. Join our early-access list to shape what comes next.",
     bullets: [
-      "PayEdge — M-Pesa reconciliation automation",
-      "EzaVault — Encrypted sovereign data storage",
-      "EdgeAnalytics — Privacy-first analytics",
+      "PayEdge - M-Pesa reconciliation automation",
+      "EzaVault - Encrypted sovereign data storage",
+      "EdgeAnalytics - Privacy-first analytics",
     ],
     href: "/products#future-stack",
     cta: "Join the Waitlist",
@@ -154,7 +154,7 @@ const STEPS = [
     icon: Search,
     step: "01",
     heading: "Discover & Design",
-    copy: "A structured workshop — auditing your infrastructure, mapping DPA/ODPC/Kenya Cloud Policy gaps, and designing an architecture that fits your budget.",
+    copy: "A structured workshop - auditing your infrastructure, mapping DPA/ODPC/Kenya Cloud Policy gaps, and designing an architecture that fits your budget.",
   },
   {
     icon: Wrench,
@@ -175,14 +175,14 @@ const ARTICLES = [
     tag: "DPA & Compliance",
     title: "What Kenya's ODPC 2025–2029 Strategy Means for Your Business",
     excerpt:
-      "7,223 data controllers registered. 96+ enforcement actions. Here's what the next five years look like — and how to prepare.",
+      "7,223 data controllers registered. 96+ enforcement actions. Here's what the next five years look like - and how to prepare.",
     href: "/resources",
   },
   {
     tag: "Cloud Strategy",
     title: "Kenya Cloud Policy 2025: A Plain-Language Guide for SMEs",
     excerpt:
-      "Data sovereignty mandates, interoperability rules, government procurement requirements — everything in one place.",
+      "Data sovereignty mandates, interoperability rules, government procurement requirements - everything in one place.",
     href: "/resources",
   },
   {
@@ -268,7 +268,7 @@ function HeroBackground() {
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
 
-      /* Grid — very faint */
+      /* Grid - very faint */
       ctx.strokeStyle = "rgba(255,255,255,0.015)";
       ctx.lineWidth = 1;
       for (let x = 0; x < W; x += 72) {
@@ -358,7 +358,7 @@ function HeroBackground() {
           ctx.lineWidth = 1;
           ctx.strokeRect(bx, by, bw, bh);
 
-          /* Corner accents — small, subtle */
+          /* Corner accents - small, subtle */
           const ca = 5;
           ctx.fillStyle = node.color + "99";
           [
@@ -431,7 +431,7 @@ export default function HomePage() {
   return (
     <main className="hero-dark-nav">
       {/* ══════════════════════════════════════════
-          DARK ZONE — hero + badges
+          DARK ZONE - hero + badges
       ══════════════════════════════════════════ */}
       <div className="relative overflow-hidden" style={{ background: "#060B14" }}>
         {/* Animated topology background */}
@@ -454,7 +454,7 @@ export default function HomePage() {
         <section className="relative pt-32 pb-20 md:pt-44 md:pb-28">
           <div className="max-w-[1320px] mx-auto px-5 md:px-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Left — copy */}
+              {/* Left - copy */}
               <div className="relative z-10">
                 <p
                   className="flex items-center gap-2.5 font-sans font-black text-[11px] tracking-[0.18em] uppercase mb-7"
@@ -496,7 +496,7 @@ export default function HomePage() {
                   style={{ fontSize: "clamp(15px, 1.5vw, 17px)", color: "rgba(241,245,249,0.52)" }}
                 >
                   We design, build, host, and secure compliant digital journeys for Kenyan and East
-                  African businesses — DPA-by-default cloud, M-Pesa-native payments, Nairobi
+                  African businesses - DPA-by-default cloud, M-Pesa-native payments, Nairobi
                   support. All under one roof.
                 </p>
 
@@ -554,7 +554,7 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {/* Right — static topology SVG (not competing with bg canvas) */}
+              {/* Right - static topology SVG (not competing with bg canvas) */}
               <div className="hidden lg:flex items-center justify-center relative z-10">
                 <div className="w-full max-w-[480px] h-[380px]">
                   <HeroTopology />
@@ -604,7 +604,7 @@ export default function HomePage() {
               Designed for Trust.
             </h2>
             <p className="font-sans text-[16px] leading-relaxed" style={{ color: "#3D4E5C" }}>
-              Generic hosting leaves your business exposed — to compliance risk, latency, and
+              Generic hosting leaves your business exposed - to compliance risk, latency, and
               vendors who've never heard of M-Pesa. EdgeCloud bundles proprietary cloud products,
               expert implementation, and ongoing managed support in a single, accountable Nairobi
               partner.
@@ -616,13 +616,13 @@ export default function HomePage() {
               {
                 icon: Shield,
                 heading: "DPA-by-Default Infrastructure",
-                copy: "Every EdgeCloud product ships with data minimisation defaults, consent templates, and DPIA-ready documentation. Kenya's DPA carries fines of up to KES 5,000,000 — we make sure you're covered.",
+                copy: "Every EdgeCloud product ships with data minimisation defaults, consent templates, and DPIA-ready documentation. Kenya's DPA carries fines of up to KES 5,000,000 - we make sure you're covered.",
                 num: "01",
               },
               {
                 icon: CreditCard,
                 heading: "M-Pesa Woven Into the Architecture",
-                copy: "M-Pesa isn't a plugin here — it's a first-class citizen. Payments, reconciliation, automated receipts, and marketing triggers. Kenya's digital payments market hit $16.82B in 2025.",
+                copy: "M-Pesa isn't a plugin here - it's a first-class citizen. Payments, reconciliation, automated receipts, and marketing triggers. Kenya's digital payments market hit $16.82B in 2025.",
                 num: "02",
               },
               {
@@ -634,7 +634,7 @@ export default function HomePage() {
               {
                 icon: CheckCircle2,
                 heading: "Built for Kenya's Digital Future",
-                copy: "The Kenya Cloud Policy 2025 mandates open standards, data sovereignty, and interoperability. Our stack meets those standards from day one — so FinTech, healthcare, and government can procure with confidence.",
+                copy: "The Kenya Cloud Policy 2025 mandates open standards, data sovereignty, and interoperability. Our stack meets those standards from day one - so FinTech, healthcare, and government can procure with confidence.",
                 num: "04",
               },
             ].map(({ icon: Icon, heading, copy, num }, i) => (
@@ -704,7 +704,7 @@ export default function HomePage() {
                 Services Built Around Results
               </h2>
               <p className="font-sans text-[15px] leading-relaxed" style={{ color: "#3D4E5C" }}>
-                Strategy, engineering, and managed operations — together, so you get outcomes, not
+                Strategy, engineering, and managed operations - together, so you get outcomes, not
                 just infrastructure.
               </p>
             </div>
@@ -770,7 +770,7 @@ export default function HomePage() {
               We Don't Just Recommend Tools. We Build Them.
             </h2>
             <p className="font-sans text-[15px] leading-relaxed" style={{ color: "#3D4E5C" }}>
-              Production-ready Kenya-first products — available standalone or as part of a managed
+              Production-ready Kenya-first products - available standalone or as part of a managed
               engagement.
             </p>
           </div>
@@ -931,7 +931,7 @@ export default function HomePage() {
               From First Call to Live Production.
             </h2>
             <p className="font-sans text-[15px] leading-relaxed" style={{ color: "#3D4E5C" }}>
-              Clear, accountable, and local — every step of the way.
+              Clear, accountable, and local - every step of the way.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 border-[1.5px] border-[#D4DBE2]">
@@ -1086,7 +1086,7 @@ export default function HomePage() {
               className="font-sans text-[15px] leading-relaxed mb-10 max-w-[480px] mx-auto"
               style={{ color: "#94A3B8" }}
             >
-              Full cloud migration, bespoke application, or DPA compliance audit — EdgeCloud's
+              Full cloud migration, bespoke application, or DPA compliance audit - EdgeCloud's
               Nairobi team is ready to help.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 mb-7">
@@ -1136,7 +1136,7 @@ export default function HomePage() {
 }
 
 /* ─── Static hero topology (right column) ────────────────────── */
-// Kept as a crisp, readable SVG — separate from the animated canvas bg
+// Kept as a crisp, readable SVG - separate from the animated canvas bg
 function HeroTopology() {
   return (
     <svg

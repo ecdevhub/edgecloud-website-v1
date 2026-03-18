@@ -19,7 +19,7 @@ export default function TableOfContents({ contentHtml }: Props) {
 
   // ─── Step 1: Read headings from the LIVE DOM ──────────────────────────────
   // We do this instead of parsing contentHtml so we always use the exact `id`
-  // values that are actually on the page — no slug mismatch possible.
+  // values that are actually on the page - no slug mismatch possible.
   useEffect(() => {
     function scanHeadings() {
       // Scope to the prose container so we don't accidentally pick up
@@ -64,7 +64,7 @@ export default function TableOfContents({ contentHtml }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contentHtml]);
 
-  // ─── Step 2: IntersectionObserver — highlight active heading ─────────────
+  // ─── Step 2: IntersectionObserver - highlight active heading ─────────────
   useEffect(() => {
     if (items.length === 0) return;
 

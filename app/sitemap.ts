@@ -5,13 +5,13 @@ const base = "https://edgecloud.co.ke";
 
 // ─── Static routes with tuned priorities & change frequencies ────────────────
 // changeFrequency guidance:
-//   "always"  — changes on every load (live data)
-//   "hourly"  — breaking news, stock tickers
-//   "daily"   — blog index, news index
-//   "weekly"  — product pages, service pages, solutions
-//   "monthly" — about/company, legal pages
-//   "yearly"  — truly evergreen / rarely touched
-//   "never"   — archived content
+//   "always"  - changes on every load (live data)
+//   "hourly"  - breaking news, stock tickers
+//   "daily"   - blog index, news index
+//   "weekly"  - product pages, service pages, solutions
+//   "monthly" - about/company, legal pages
+//   "yearly"  - truly evergreen / rarely touched
+//   "never"   - archived content
 const staticRoutes: MetadataRoute.Sitemap = [
   // ── Core ──────────────────────────────────────────────────────────────────
   {
@@ -126,13 +126,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }));
   } catch (err) {
-    // Don't crash the build — just omit blog posts from this run.
+    // Don't crash the build - just omit blog posts from this run.
     console.warn("[sitemap] Could not fetch blog slugs:", err);
   }
 
   // ── Stamp static routes with today's date ─────────────────────────────────
   // For static pages we don't have a DB-backed updatedAt, so we use the
-  // build time. This is fine — Google ignores lastModified if it never changes.
+  // build time. This is fine - Google ignores lastModified if it never changes.
   const now = new Date();
   const stampedStatic = staticRoutes.map((route) => ({
     ...route,

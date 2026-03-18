@@ -111,7 +111,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       <ViewTracker slug={post.slug} />
 
       {/* ════════════════════════════════════════
-          ARTICLE HERO — replaces raw image banner
+          ARTICLE HERO - replaces raw image banner
           Dark gradient overlay on featured image,
           with header content on top. Clean & readable.
       ════════════════════════════════════════ */}
@@ -299,7 +299,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* ════════════════════════════════════════
-          ARTICLE BODY — 3-column layout:
+          ARTICLE BODY - 3-column layout:
           [sticky TOC left] [content center] [empty right gutter]
           TOC uses position:sticky + overflow-y:auto so it
           scrolls independently and tracks the reader.
@@ -333,7 +333,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               {/* TableOfContents renders the actual <nav> with anchor links.
                   The component should add an `id` to each heading in the
                   contentHtml, and use IntersectionObserver to highlight
-                  the active heading — that's what makes it "scroll with reader". */}
+                  the active heading - that's what makes it "scroll with reader". */}
               <TableOfContents contentHtml={post.contentHtml ?? ""} />
             </aside>
 

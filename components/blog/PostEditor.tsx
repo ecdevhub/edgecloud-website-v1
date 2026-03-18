@@ -769,7 +769,7 @@ export default function PostEditor({ postId, initialData, categories, tags }: Po
                 </div>
               </div>
 
-              {/* Featured image — uses the uploader component */}
+              {/* Featured image - uses the uploader component */}
               <ImageUploader
                 label="Featured Image"
                 value={featuredImage}
